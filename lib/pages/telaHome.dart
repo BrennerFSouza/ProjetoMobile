@@ -2,6 +2,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:projetomobile/pages/telaControleRefeicao.dart';
+import 'package:projetomobile/services/autenticacao_services.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 import 'package:projetomobile/models/exercicio_modelo.dart';
 import 'package:projetomobile/models/sentimento_modelo.dart';
@@ -34,19 +35,22 @@ class _NavigationExampleState extends State<NavigationExample> {
     return Scaffold(
       backgroundColor: Color(0xFF364E7B),
       appBar: AppBar(
-        title: const Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              "Dashboard",
-              style: TextStyle(
-                fontWeight: FontWeight.bold,
-                fontSize: 22,
-                color: Colors.black,
-              ),
-            ),
-          ],
+        title: const Text(
+          "Dashboard",
+          style: TextStyle(
+            fontWeight: FontWeight.bold,
+            fontSize: 22,
+            color: Colors.black,
+          ),
         ),
+        actions: [
+          IconButton(
+            icon: Icon(Icons.logout),
+            onPressed: () {
+              AutenticacaoServico().deslogar();
+            },
+          ),
+        ],
       ),
       bottomNavigationBar: NavigationBar(
         onDestinationSelected: (int index) {
@@ -113,7 +117,7 @@ class _NavigationExampleState extends State<NavigationExample> {
             ],
           ),
         ),
-       ][currentPageIndex],
+      ][currentPageIndex],
     );
   }
 }

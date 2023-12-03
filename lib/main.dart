@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:projetomobile/pages/autenticacao_tela.dart';
 // ignore: unused_import
@@ -23,7 +24,26 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return const MaterialApp(
       title: 'NUTRIFIT',
-      home: AutenticacaoTela(),
+      home: RoteadorTela(),
     );
+  }
+}
+
+/* Verificador de login */
+class RoteadorTela extends StatelessWidget {
+  const RoteadorTela({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return StreamBuilder<User?>(
+        stream: FirebaseAuth.instance.userChanges(),
+        builder: (context, snapshot) {
+          if (snapshot.hasData) {
+            print('conta existe2');
+            return TelaHome();
+          } else {
+            return AutenticacaoTela();
+          }
+        });
   }
 }

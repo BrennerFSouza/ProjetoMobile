@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:projetomobile/_comum/meu_snackbar.dart';
+import 'package:projetomobile/_comum/snackbar_authentication.dart';
 import 'package:projetomobile/_comum/minhascores.dart';
 import 'package:projetomobile/components/decoration_camp_authentication.dart';
 import 'package:projetomobile/pages/telaHome.dart';
@@ -169,16 +169,25 @@ class _AutenticacaoTelaState extends State<AutenticacaoTela> {
     String nome = _nomeController.text;
     String senha = _senhaController.text;
     String email = _emailController.text;
-  
+
     if (_formKey.currentState!.validate()) {
       if (queroEntrar) {
         print("Entrada validada");
-        Navigator.push(
+
+        _autenServico.logarUsuarios(email: email, senha: senha).then(
+          (String? erro) {
+            if (erro != null) {
+              showSnackbar(context: context, texto: erro);
+            }
+          },
+        );
+
+        /* Navigator.push(
           context,
           MaterialPageRoute(
             builder: (context) => TelaHome(),
           ),
-        );
+        ); */
       } else {
         print("Cadastro validado");
         print(

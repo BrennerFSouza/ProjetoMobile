@@ -1,6 +1,7 @@
 // ignore: unused_import
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:syncfusion_flutter_charts/charts.dart';
 import 'package:projetomobile/models/exercicio_modelo.dart';
 import 'package:projetomobile/models/sentimento_modelo.dart';
 
@@ -30,23 +31,16 @@ class _NavigationExampleState extends State<NavigationExample> {
   Widget build(BuildContext context) {
     final ThemeData theme = Theme.of(context);
     return Scaffold(
-      backgroundColor: Colors.blue,
+      backgroundColor: Color(0xFF364E7B),
       appBar: AppBar(
         title: const Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              "Test",
+              "Controle de Refeições",
               style: TextStyle(
                 fontWeight: FontWeight.bold,
                 fontSize: 22,
-                color: Colors.black,
-              ),
-            ),
-            Text(
-              "Subtítulo",
-              style: TextStyle(
-                fontSize: 15,
                 color: Colors.black,
               ),
             ),
@@ -70,73 +64,37 @@ class _NavigationExampleState extends State<NavigationExample> {
           NavigationDestination(
             selectedIcon: Icon(Icons.home),
             icon: Icon(Icons.home_outlined),
-            label: 'Page Test',
-          ),
-          NavigationDestination(
-            icon: Badge(child: Icon(Icons.notifications_sharp)),
-            label: 'Notifications',
-          ),
-          NavigationDestination(
-            icon: Badge(
-              label: Text('2'),
-              child: Icon(Icons.messenger_sharp),
-            ),
-            label: 'Messages',
+            label: 'Controle de Refeições',
           ),
         ],
       ),
       body: <Widget>[
         /// Home page
-        Card(
+        const Card(
           shadowColor: Colors.transparent,
           margin: const EdgeInsets.all(8.0),
-          child: SizedBox.expand(
-            child: Center(
-              child: Text(
-                'Home page',
-                style: theme.textTheme.titleLarge,
-              ),
-            ),
-          ),
-        ),
-
-        Card(
-          shadowColor: Colors.transparent,
-          margin: const EdgeInsets.all(8.0),
-          child: SizedBox.expand(
-            child: Center(
-              child: Text(
-                'Page Test',
-                style: theme.textTheme.titleLarge,
-              ),
-            ),
-          ),
-        ),
-
-        /// Notifications page
-        const Padding(
-          padding: EdgeInsets.all(8.0),
           child: Column(
-            children: <Widget>[
-              Card(
-                child: ListTile(
-                  leading: Icon(Icons.notifications_sharp),
-                  title: Text('Notification 1'),
-                  subtitle: Text('This is a notification'),
-                ),
-              ),
-              Card(
-                child: ListTile(
-                  leading: Icon(Icons.notifications_sharp),
-                  title: Text('Notification 2'),
-                  subtitle: Text('This is a notification'),
-                ),
-              ),
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Center(child: Text('data')),
+              Center(child: Text('data')),
             ],
           ),
         ),
 
-        /// Messages page
+        Card(
+          shadowColor: Colors.transparent,
+          margin: const EdgeInsets.all(8.0),
+          child: SizedBox.expand(
+            child: Text(
+              'Controle de Refeição',
+              style: theme.textTheme.titleLarge,
+            ),
+          ),
+        ),
+
+        /* /// Messages page
         ListView.builder(
           reverse: true,
           itemCount: 2,
@@ -176,7 +134,7 @@ class _NavigationExampleState extends State<NavigationExample> {
               ),
             );
           },
-        ),
+        ), */
       ][currentPageIndex],
     );
   }

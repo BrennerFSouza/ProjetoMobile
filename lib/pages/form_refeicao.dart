@@ -12,13 +12,13 @@ class NovaRefeicao extends StatefulWidget {
 }
 
 class _NovaRefeicaoState extends State<NovaRefeicao> {
-  TextEditingController refeicaoController = TextEditingController();
+  final TextEditingController _refeicaoController = TextEditingController();
   String? nomeAlimento1;
-  TextEditingController qtd1Controller = TextEditingController();
+  final TextEditingController _qtd1Controller = TextEditingController();
   String? nomeAlimento2;
-  TextEditingController qtd2Controller = TextEditingController();
+  final TextEditingController _qtd2Controller = TextEditingController();
   String? nomeAlimento3;
-  TextEditingController qtd3Controller = TextEditingController();
+  final TextEditingController _qtd3Controller = TextEditingController();
 
   @override
   void initState() {
@@ -77,7 +77,7 @@ class _NovaRefeicaoState extends State<NovaRefeicao> {
                   Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: TextFormField(
-                      controller: refeicaoController,
+                      controller: _refeicaoController,
                       textAlign: TextAlign.center,
                       decoration: const InputDecoration(
                         border: OutlineInputBorder(),
@@ -121,7 +121,7 @@ class _NovaRefeicaoState extends State<NovaRefeicao> {
                     padding: const EdgeInsets.all(8.0),
                     child: TextFormField(
                       keyboardType: TextInputType.number,
-                      controller: qtd1Controller,
+                      controller: _qtd1Controller,
                       textAlign: TextAlign.center,
                       decoration: const InputDecoration(
                         border: OutlineInputBorder(),
@@ -164,7 +164,7 @@ class _NovaRefeicaoState extends State<NovaRefeicao> {
                     padding: const EdgeInsets.all(8.0),
                     child: TextFormField(
                       keyboardType: TextInputType.number,
-                      controller: qtd2Controller,
+                      controller: _qtd2Controller,
                       textAlign: TextAlign.center,
                       decoration: const InputDecoration(
                         border: OutlineInputBorder(),
@@ -207,7 +207,7 @@ class _NovaRefeicaoState extends State<NovaRefeicao> {
                     padding: const EdgeInsets.all(8.0),
                     child: TextFormField(
                       keyboardType: TextInputType.number,
-                      controller: qtd3Controller,
+                      controller: _qtd3Controller,
                       textAlign: TextAlign.center,
                       decoration: const InputDecoration(
                         border: OutlineInputBorder(),
@@ -220,7 +220,8 @@ class _NovaRefeicaoState extends State<NovaRefeicao> {
                   Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      const SizedBox(height: 25.0), // Adiciona espaço acima da Row
+                      const SizedBox(
+                          height: 25.0), // Adiciona espaço acima da Row
                       Padding(
                         padding: const EdgeInsets.symmetric(
                             horizontal:
@@ -231,27 +232,44 @@ class _NovaRefeicaoState extends State<NovaRefeicao> {
                           children: [
                             ElevatedButton(
                               onPressed: () {
-                                if (refeicaoController.text != null &&
-                                    (nomeAlimento1 != 'Selecionar Alimento' ||
-                                        nomeAlimento2 !=
+                                final String nomeRefeicao =
+                                    _refeicaoController.text;
+
+                                final String? nomedoAlimento1 = nomeAlimento1;
+                                final int? qtd1 =
+                                    int.tryParse(_qtd1Controller.text);
+                                final String? nomedoAlimento2 = nomeAlimento2;
+                                final int? qtd2 =
+                                    int.tryParse(_qtd2Controller.text);
+                                final String? nomedoAlimento3 = nomeAlimento3;
+                                final int? qtd3 =
+                                    int.tryParse(_qtd3Controller.text);
+
+                                if (nomeRefeicao != null &&
+                                    (nomedoAlimento1 != 'Selecionar Alimento' ||
+                                        nomedoAlimento2 !=
                                             'Selecionar Alimento' ||
-                                        nomeAlimento3 !=
+                                        nomedoAlimento3 !=
                                             'Selecionar Alimento')) {
-                                  print(refeicaoController.text);
-                                  if (nomeAlimento1 != 'Selecionar Alimento' &&
-                                      qtd1Controller.text != null) {
-                                    print(nomeAlimento1);
-                                    print(qtd1Controller.text);
+                                  print(_refeicaoController.text);
+
+                                  if (nomedoAlimento1 !=
+                                          'Selecionar Alimento' &&
+                                      qtd1 != null) {
+                                    print(nomedoAlimento1);
+                                    print(qtd1);
                                   }
-                                  if (nomeAlimento2 != 'Selecionar Alimento' &&
-                                      qtd2Controller.text != null) {
-                                    print(nomeAlimento2);
-                                    print(qtd2Controller.text);
+                                  if (nomedoAlimento2 !=
+                                          'Selecionar Alimento' &&
+                                      qtd2 != null) {
+                                    print(nomedoAlimento2);
+                                    print(qtd2);
                                   }
-                                  if (nomeAlimento3 != 'Selecionar Alimento' &&
-                                      qtd3Controller.text != null) {
-                                    print(nomeAlimento3);
-                                    print(qtd3Controller.text);
+                                  if (nomedoAlimento3 !=
+                                          'Selecionar Alimento' &&
+                                      qtd3 != null) {
+                                    print(nomedoAlimento3);
+                                    print(qtd3);
                                   }
                                 }
                               },

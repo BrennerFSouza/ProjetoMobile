@@ -1,11 +1,12 @@
+// ignore_for_file: unused_import
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:projetomobile/pages/autenticacao_tela.dart';
-// ignore: unused_import
 import 'package:projetomobile/pages/exercicio_tela.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'package:projetomobile/pages/formRefeicao.dart';
-import 'package:projetomobile/pages/telaHome.dart';
+import 'package:projetomobile/pages/form_refeicao.dart';
+import 'package:projetomobile/pages/tela_home.dart';
 import 'firebase_options.dart';
 
 void main() async {
@@ -39,10 +40,9 @@ class RoteadorTela extends StatelessWidget {
         stream: FirebaseAuth.instance.userChanges(),
         builder: (context, snapshot) {
           if (snapshot.hasData) {
-            print('conta existe2');
-            return TelaHome();
+            return const TelaHome();
           } else {
-            return AutenticacaoTela();
+            return const AutenticacaoTela();
           }
         });
   }

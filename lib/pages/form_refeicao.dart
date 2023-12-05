@@ -1,14 +1,17 @@
+// ignore_for_file: unused_import, unnecessary_null_comparison
+// ignore_for_file: avoid_print
+
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
-class novaRefeicao extends StatefulWidget {
-  const novaRefeicao({super.key});
+class NovaRefeicao extends StatefulWidget {
+  const NovaRefeicao({super.key});
 
   @override
-  State<novaRefeicao> createState() => _novaRefeicaoState();
+  State<NovaRefeicao> createState() => _NovaRefeicaoState();
 }
 
-class _novaRefeicaoState extends State<novaRefeicao> {
+class _NovaRefeicaoState extends State<NovaRefeicao> {
   TextEditingController refeicaoController = TextEditingController();
   String? nomeAlimento1;
   TextEditingController qtd1Controller = TextEditingController();
@@ -217,7 +220,7 @@ class _novaRefeicaoState extends State<novaRefeicao> {
                   Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      SizedBox(height: 25.0), // Adiciona espaço acima da Row
+                      const SizedBox(height: 25.0), // Adiciona espaço acima da Row
                       Padding(
                         padding: const EdgeInsets.symmetric(
                             horizontal:
@@ -269,8 +272,7 @@ class _novaRefeicaoState extends State<novaRefeicao> {
               ),
             ),
           ),
-        )
-        );
+        ));
   }
 
   DropdownMenuItem<String> buildMenuItem(String item) => DropdownMenuItem(

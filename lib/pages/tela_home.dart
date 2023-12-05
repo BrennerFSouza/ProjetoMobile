@@ -1,14 +1,15 @@
-// ignore: unused_import
+// ignore_for_file: unused_import
+
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:projetomobile/pages/telaControleRefeicao.dart';
+import 'package:projetomobile/pages/tela_controle_refeicao.dart';
 import 'package:projetomobile/services/autenticacao_services.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 import 'package:projetomobile/models/exercicio_modelo.dart';
 import 'package:projetomobile/models/sentimento_modelo.dart';
 
 class TelaHome extends StatelessWidget {
-  TelaHome({super.key});
+  const TelaHome({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -31,9 +32,9 @@ class _NavigationExampleState extends State<NavigationExample> {
 
   @override
   Widget build(BuildContext context) {
-    final ThemeData theme = Theme.of(context);
+    //final ThemeData theme = Theme.of(context);
     return Scaffold(
-      backgroundColor: Color(0xFF364E7B),
+      backgroundColor: const Color(0xFF364E7B),
       appBar: AppBar(
         title: const Text(
           "Dashboard",
@@ -45,7 +46,7 @@ class _NavigationExampleState extends State<NavigationExample> {
         ),
         actions: [
           IconButton(
-            icon: Icon(Icons.logout),
+            icon: const Icon(Icons.logout),
             onPressed: () {
               AutenticacaoServico().deslogar();
             },
@@ -75,7 +76,7 @@ class _NavigationExampleState extends State<NavigationExample> {
                 context,
                 PageRouteBuilder(
                   pageBuilder: (context, animation, secondaryAnimation) =>
-                      TelaControleRefeicao(),
+                      const TelaControleRefeicao(),
                   transitionsBuilder:
                       (context, animation, secondaryAnimation, child) {
                     // Aqui definimos uma transição que não realiza nenhuma animação visível
@@ -107,7 +108,7 @@ class _NavigationExampleState extends State<NavigationExample> {
         /// Home page
         const Card(
           shadowColor: Colors.transparent,
-          margin: const EdgeInsets.all(8.0),
+          margin: EdgeInsets.all(8.0),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.stretch,

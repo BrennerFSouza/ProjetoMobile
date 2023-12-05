@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
-InputDecoration getAuthenticationInputDecoration(String Label) {
+InputDecoration getAuthenticationInputDecoration(String label) {
   return InputDecoration(
-    hintText: Label,
+    hintText: label,
     fillColor: Colors.white,
     filled: true,
     contentPadding: const EdgeInsets.fromLTRB(16, 8, 16, 8),

@@ -1,9 +1,11 @@
+// ignore_for_file: avoid_print, unused_import
+
 import 'package:flutter/material.dart';
 import 'package:projetomobile/_comum/snackbar_authentication.dart';
 import 'package:projetomobile/_comum/minhascores.dart';
 import 'package:projetomobile/components/decoration_camp_authentication.dart';
-import 'package:projetomobile/pages/telaHome.dart';
 import 'package:projetomobile/services/autenticacao_services.dart';
+import 'package:projetomobile/pages/tela_home.dart';
 
 class AutenticacaoTela extends StatefulWidget {
   const AutenticacaoTela({super.key});
@@ -16,11 +18,11 @@ class _AutenticacaoTelaState extends State<AutenticacaoTela> {
   bool queroEntrar = true;
   final _formKey = GlobalKey<FormState>();
 
-  TextEditingController _emailController = TextEditingController();
-  TextEditingController _senhaController = TextEditingController();
-  TextEditingController _nomeController = TextEditingController();
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _senhaController = TextEditingController();
+  final TextEditingController _nomeController = TextEditingController();
 
-  AutenticacaoServico _autenServico = AutenticacaoServico();
+  final AutenticacaoServico _autenServico = AutenticacaoServico();
 
   @override
   Widget build(BuildContext context) {

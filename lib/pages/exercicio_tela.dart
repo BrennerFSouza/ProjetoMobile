@@ -1,4 +1,5 @@
-// ignore: unused_import
+// ignore_for_file: avoid_print, unused_import
+
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:projetomobile/models/exercicio_modelo.dart';

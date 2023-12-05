@@ -1,15 +1,16 @@
-// ignore: unused_import
+// ignore_for_file: unused_import
+
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:projetomobile/pages/formRefeicao.dart';
-import 'package:projetomobile/pages/telaHome.dart';
+import 'package:projetomobile/pages/form_refeicao.dart';
+import 'package:projetomobile/pages/tela_home.dart';
 import 'package:projetomobile/services/autenticacao_services.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 import 'package:projetomobile/models/exercicio_modelo.dart';
 import 'package:projetomobile/models/sentimento_modelo.dart';
 
 class TelaControleRefeicao extends StatelessWidget {
-  TelaControleRefeicao({super.key});
+  const TelaControleRefeicao({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -32,9 +33,10 @@ class _NavigationExampleState extends State<NavigationExample> {
 
   @override
   Widget build(BuildContext context) {
+    // ignore: unused_local_variable
     final ThemeData theme = Theme.of(context);
     return Scaffold(
-      backgroundColor: Color(0xFF364E7B),
+      backgroundColor: const Color(0xFF364E7B),
       appBar: AppBar(
         title: const Text(
           "Dashboard",
@@ -65,7 +67,7 @@ class _NavigationExampleState extends State<NavigationExample> {
                 context,
                 PageRouteBuilder(
                   pageBuilder: (context, animation, secondaryAnimation) =>
-                      TelaHome(),
+                      const TelaHome(),
                   transitionsBuilder:
                       (context, animation, secondaryAnimation, child) {
                     return child;
@@ -118,11 +120,11 @@ class _NavigationExampleState extends State<NavigationExample> {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => const novaRefeicao(),
+                    builder: (context) => const NovaRefeicao(),
                   ),
                 );
               },
-              child: Icon(Icons.add),
+              child: const Icon(Icons.add),
             ),
           ),
         ],

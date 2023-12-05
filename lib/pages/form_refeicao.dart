@@ -261,7 +261,7 @@ class _NovaRefeicaoState extends State<NovaRefeicao> {
                                     print(qtd1);
 
                                     final Refeicao newRefeicao = Refeicao(
-                                      nameRefeicao: nomeRefeicao,
+                                      nomeRefeicao: nomeRefeicao,
                                       nomeAlimento: nomedoAlimento1,
                                       qtdAlimento: qtd1,
                                     );

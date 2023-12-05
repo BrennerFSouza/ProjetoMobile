@@ -3,6 +3,7 @@
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:projetomobile/models/refeicao.dart';
 
 class NovaRefeicao extends StatefulWidget {
   const NovaRefeicao({super.key});
@@ -235,13 +236,13 @@ class _NovaRefeicaoState extends State<NovaRefeicao> {
                                 final String nomeRefeicao =
                                     _refeicaoController.text;
 
-                                final String? nomedoAlimento1 = nomeAlimento1;
+                                final String nomedoAlimento1 = nomeAlimento1!;
                                 final int? qtd1 =
                                     int.tryParse(_qtd1Controller.text);
-                                final String? nomedoAlimento2 = nomeAlimento2;
+                                final String nomedoAlimento2 = nomeAlimento2!;
                                 final int? qtd2 =
                                     int.tryParse(_qtd2Controller.text);
-                                final String? nomedoAlimento3 = nomeAlimento3;
+                                final String nomedoAlimento3 = nomeAlimento3!;
                                 final int? qtd3 =
                                     int.tryParse(_qtd3Controller.text);
 
@@ -258,6 +259,13 @@ class _NovaRefeicaoState extends State<NovaRefeicao> {
                                       qtd1 != null) {
                                     print(nomedoAlimento1);
                                     print(qtd1);
+
+                                    final Refeicao newRefeicao = Refeicao(
+                                      nameRefeicao: nomeRefeicao,
+                                      nomeAlimento: nomedoAlimento1,
+                                      qtdAlimento: qtd1,
+                                    );
+                                    Navigator.pop(context, newRefeicao);
                                   }
                                   if (nomedoAlimento2 !=
                                           'Selecionar Alimento' &&

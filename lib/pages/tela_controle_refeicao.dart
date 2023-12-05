@@ -1,4 +1,4 @@
-// ignore_for_file: unused_import
+// ignore_for_file: unused_import, unnecessary_import
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -122,6 +122,8 @@ class _NavigationExampleState extends State<NavigationExample> {
                   MaterialPageRoute(
                     builder: (context) => const NovaRefeicao(),
                   ),
+                ).then(
+                  (newRefeicao) => debugPrint(newRefeicao.toString()),
                 );
               },
               child: const Icon(Icons.add),

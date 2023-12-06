@@ -1,13 +1,15 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 // ignore_for_file: unused_import, unnecessary_import
-
+import 'package:collection/collection.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:syncfusion_flutter_charts/charts.dart';
+
 import 'package:projetomobile/database/app_database.dart';
 import 'package:projetomobile/models/refeicao.dart';
 import 'package:projetomobile/pages/form_refeicao.dart';
 import 'package:projetomobile/pages/tela_home.dart';
 import 'package:projetomobile/services/autenticacao_services.dart';
-import 'package:syncfusion_flutter_charts/charts.dart';
 
 class TelaControleRefeicao extends StatelessWidget {
   const TelaControleRefeicao({super.key});
@@ -114,12 +116,19 @@ class _NavigationExampleState extends State<NavigationExample> {
                 return const Text('Sem dados disponíveis.');
               } else {
                 final List<Refeicao> refeicoes = snapshot.data!;
+                final Map<String, List<Refeicao>> groupedRefeicoes = groupBy(
+                    refeicoes, (Refeicao refeicao) => refeicao.nomeRefeicao);
+
                 return ListView.builder(
                   itemBuilder: (context, index) {
-                    final Refeicao refeicao = refeicoes[index];
-                    return _RefeicaoItem(refeicao);
+                    final List<String> keys = groupedRefeicoes.keys.toList();
+                    final String key = keys[index];
+                    final List<Refeicao> blocos = groupedRefeicoes[key]!;
+
+                    // Aqui, você pode criar um widget para exibir o bloco de itens
+                    return _RefeicaoBlock(key, blocos);
                   },
-                  itemCount: refeicoes.length,
+                  itemCount: groupedRefeicoes.length,
                 );
               }
             },
@@ -185,10 +194,129 @@ class _NavigationExampleState extends State<NavigationExample> {
   }
 }
 
+class _RefeicaoBlock extends StatelessWidget {
+  final String nomeRefeicao;
+  final List<Refeicao> refeicoes;
+  final items = [
+    'Selecionar Alimento',
+    'Arroz',
+    'Feijão',
+    'Batata',
+    'Frango',
+    'Pão',
+    'Requeijão',
+    'Banana',
+    'Ovo'
+  ];
+
+  _RefeicaoBlock(this.nomeRefeicao, this.refeicoes);
+
+  @override
+  Widget build(BuildContext context) {
+    return Card(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Text(
+            nomeRefeicao,
+            style: const TextStyle(
+              fontSize: 24.0,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+          const SizedBox(
+              height: 8.0), // Adiciona espaço entre o nomeRefeicao e a tabela
+          Table(
+            columnWidths: const {
+              0: FlexColumnWidth(1), // Largura da primeira coluna
+              1: FlexColumnWidth(1), // Largura da segunda coluna
+            },
+            children: [
+              const TableRow(
+                children: [
+                  TableCell(
+                    child: Center(
+                      child: Text(
+                        'Alimento',
+                        style: TextStyle(
+                          fontSize: 18.0,
+                        ),
+                      ),
+                    ),
+                  ),
+                  TableCell(
+                    child: Center(
+                      child: Text(
+                        'Quantidade',
+                        style: TextStyle(
+                          fontSize: 18.0,
+                        ),
+                      ),
+                    ),
+                  ),TableCell(
+                    child: Center(
+                      child: Text(
+                        'Kcal',
+                        style: TextStyle(
+                          fontSize: 18.0,
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+              ...refeicoes.map((refeicao) {
+                return TableRow(
+                  children: [
+                    TableCell(
+                      child: Center(
+                        child: Text(
+                          refeicao.nomeAlimento,
+                          style: const TextStyle(
+                            fontSize: 18.0,
+                          ),
+                        ),
+                      ),
+                    ),
+                    TableCell(
+                      child: Center(
+                        child: Text(
+                          refeicao.qtdAlimento.toString(),
+                          style: const TextStyle(
+                            fontSize: 18.0,
+                          ),
+                        ),
+                      ),
+                    ),
+                    TableCell(
+                      child: Center(
+                        child: Text(
+                          refeicao.qtdAlimento.toString(),
+                          style: const TextStyle(
+                            fontSize: 18.0,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                );
+              }).toList(),
+            ],
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+/* 
 class _RefeicaoItem extends StatelessWidget {
   final Refeicao refeicao;
 
-  const _RefeicaoItem(this.refeicao);
+  const _RefeicaoItem(
+    Key? key,
+    this.refeicao,
+  ) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -220,3 +348,4 @@ class _RefeicaoItem extends StatelessWidget {
     );
   }
 }
+ */

@@ -2,6 +2,7 @@
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:projetomobile/models/refeicao.dart';
 import 'package:projetomobile/pages/form_refeicao.dart';
 import 'package:projetomobile/pages/tela_home.dart';
 import 'package:projetomobile/services/autenticacao_services.dart';
@@ -30,72 +31,87 @@ class NavigationExample extends StatefulWidget {
 
 class _NavigationExampleState extends State<NavigationExample> {
   int currentPageIndex = 1;
-
+  final List<Refeicao> refeicoes = [];
   @override
   Widget build(BuildContext context) {
+    refeicoes.add(
+      Refeicao(
+        id: 0,
+        nomeRefeicao: 'Teste111',
+        nomeAlimento: 'Arroz',
+        qtdAlimento: 1234,
+      ),
+    );
     // ignore: unused_local_variable
     final ThemeData theme = Theme.of(context);
     return Scaffold(
-      backgroundColor: const Color(0xFF364E7B),
-      appBar: AppBar(
-        title: const Text(
-          "Dashboard",
-          style: TextStyle(
-            fontWeight: FontWeight.bold,
-            fontSize: 22,
-            color: Colors.black,
+        backgroundColor: const Color(0xFF364E7B),
+        appBar: AppBar(
+          title: const Text(
+            "Dashboard",
+            style: TextStyle(
+              fontWeight: FontWeight.bold,
+              fontSize: 22,
+              color: Colors.black,
+            ),
           ),
+          actions: [
+            IconButton(
+              icon: const Icon(Icons.logout),
+              onPressed: () {
+                AutenticacaoServico().deslogar();
+              },
+            ),
+          ],
         ),
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.logout),
-            onPressed: () {
-              AutenticacaoServico().deslogar();
-            },
-          ),
-        ],
-      ),
-      bottomNavigationBar: NavigationBar(
-        onDestinationSelected: (int index) {
-          setState(() {
-            currentPageIndex = index;
-          });
-          // Switch da tela
-          switch (index) {
-            case 0:
-              Navigator.pushReplacement(
-                context,
-                PageRouteBuilder(
-                  pageBuilder: (context, animation, secondaryAnimation) =>
-                      const TelaHome(),
-                  transitionsBuilder:
-                      (context, animation, secondaryAnimation, child) {
-                    return child;
-                  },
-                  transitionDuration: Duration.zero,
-                ),
-              );
-              break;
-          }
-        },
-        indicatorColor: Colors.amber,
-        selectedIndex: currentPageIndex,
-        destinations: const <Widget>[
-          NavigationDestination(
-            selectedIcon: Icon(Icons.home),
-            icon: Icon(Icons.home_outlined),
-            label: 'Home',
-          ),
-          NavigationDestination(
-            selectedIcon: Icon(Icons.home),
-            icon: Icon(Icons.home_outlined),
-            label: 'Controle de Refeições',
-          ),
-        ],
-      ),
-      body:
-          // Controle de Refeições
-          Stack(
+        bottomNavigationBar: NavigationBar(
+          onDestinationSelected: (int index) {
+            setState(() {
+              currentPageIndex = index;
+            });
+            // Switch da tela
+            switch (index) {
+              case 0:
+                Navigator.pushReplacement(
+                  context,
+                  PageRouteBuilder(
+                    pageBuilder: (context, animation, secondaryAnimation) =>
+                        const TelaHome(),
+                    transitionsBuilder:
+                        (context, animation, secondaryAnimation, child) {
+                      return child;
+                    },
+                    transitionDuration: Duration.zero,
+                  ),
+                );
+                break;
+            }
+          },
+          indicatorColor: Colors.amber,
+          selectedIndex: currentPageIndex,
+          destinations: const <Widget>[
+            NavigationDestination(
+              selectedIcon: Icon(Icons.home),
+              icon: Icon(Icons.home_outlined),
+              label: 'Home',
+            ),
+            NavigationDestination(
+              selectedIcon: Icon(Icons.home),
+              icon: Icon(Icons.home_outlined),
+              label: 'Controle de Refeições',
+            ),
+          ],
+        ),
+        body: ListView.builder(
+          itemBuilder: (context, index) {
+            final Refeicao refeicao = refeicoes[index];
+            return _RefeicaoItem(refeicao);
+          },
+          itemCount: refeicoes.length,
+        )
+
+        // Controle de Refeições
+        /* Stack(
         children: [
           const Card(
             shadowColor: Colors.transparent,
@@ -130,6 +146,43 @@ class _NavigationExampleState extends State<NavigationExample> {
             ),
           ),
         ],
+      ), */
+        );
+  }
+}
+
+class _RefeicaoItem extends StatelessWidget {
+  final Refeicao refeicao;
+
+  const _RefeicaoItem(this.refeicao);
+
+  @override
+  Widget build(BuildContext context) {
+    // TODO: implement build
+    return Card(
+      child: ListTile(
+        title: Text(
+          refeicao.nomeRefeicao,
+          style: const TextStyle(
+            fontSize: 24.0,
+          ),
+        ),
+        subtitle: Row(
+          children: [
+            Text(
+              refeicao.nomeAlimento,
+              style: const TextStyle(
+                fontSize: 18.0,
+              ),
+            ),
+            Text(
+              refeicao.qtdAlimento.toString(),
+              style: const TextStyle(
+                fontSize: 18.0,
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }

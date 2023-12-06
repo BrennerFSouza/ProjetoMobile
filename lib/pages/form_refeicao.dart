@@ -1,4 +1,4 @@
-// ignore_for_file: unused_import, unnecessary_null_comparison
+// ignore_for_file: unused_import, unnecessary_null_comparison, unnecessary_import
 // ignore_for_file: avoid_print
 
 import 'package:flutter/foundation.dart';

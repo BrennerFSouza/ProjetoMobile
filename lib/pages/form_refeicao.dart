@@ -268,22 +268,39 @@ class _NovaRefeicaoState extends State<NovaRefeicao> {
                                       nomeAlimento: nomedoAlimento1,
                                       qtdAlimento: qtd1,
                                     );
-                                    findAll().then((refeicoes) =>
-                                        debugPrint(refeicoes.toString()));
-                                    Navigator.pop(context, newRefeicao);
+
+                                    save(newRefeicao);
                                   }
                                   if (nomedoAlimento2 !=
                                           'Selecionar Alimento' &&
                                       qtd2 != null) {
                                     print(nomedoAlimento2);
                                     print(qtd2);
+                                    final Refeicao newRefeicao = Refeicao(
+                                      id: 0,
+                                      nomeRefeicao: nomeRefeicao,
+                                      nomeAlimento: nomedoAlimento2,
+                                      qtdAlimento: qtd2,
+                                    );
+
+                                    save(newRefeicao);
                                   }
                                   if (nomedoAlimento3 !=
                                           'Selecionar Alimento' &&
                                       qtd3 != null) {
                                     print(nomedoAlimento3);
                                     print(qtd3);
+                                    final Refeicao newRefeicao = Refeicao(
+                                      id: 0,
+                                      nomeRefeicao: nomeRefeicao,
+                                      nomeAlimento: nomedoAlimento3,
+                                      qtdAlimento: qtd3,
+                                    );
+
+                                    save(newRefeicao);
                                   }
+
+                                  Navigator.pop(context, true);
                                 }
                               },
                               child: const Text('Adicionar'),

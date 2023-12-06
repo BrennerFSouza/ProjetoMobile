@@ -128,15 +128,16 @@ class _NavigationExampleState extends State<NavigationExample> {
             bottom: 16.0,
             right: 16.0,
             child: FloatingActionButton(
-              onPressed: () {
-                Navigator.push(
+              onPressed: () async {
+                final result = await Navigator.push(
                   context,
                   MaterialPageRoute(
                     builder: (context) => const NovaRefeicao(),
                   ),
-                ).then(
-                  (newRefeicao) => debugPrint(newRefeicao.toString()),
                 );
+                if (result != null && result == true) {
+                  setState(() {});
+                }
               },
               child: const Icon(Icons.add),
             ),

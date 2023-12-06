@@ -16,13 +16,6 @@ void main() async {
     options: DefaultFirebaseOptions.currentPlatform,
   );
   runApp(const MyApp());
-
-  save(Refeicao(
-    id: 1,
-    nomeRefeicao: 'café da manhã',
-    nomeAlimento: 'Feijão',
-    qtdAlimento: 111,
-  ));
   findAll().then((refeicoes) => debugPrint(refeicoes.toString()));
 }
 

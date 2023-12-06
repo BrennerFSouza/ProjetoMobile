@@ -5,6 +5,8 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:projetomobile/models/refeicao.dart';
 
+import '../database/app_database.dart';
+
 class NovaRefeicao extends StatefulWidget {
   const NovaRefeicao({super.key});
 
@@ -261,10 +263,13 @@ class _NovaRefeicaoState extends State<NovaRefeicao> {
                                     print(qtd1);
 
                                     final Refeicao newRefeicao = Refeicao(
+                                      id: 0,
                                       nomeRefeicao: nomeRefeicao,
                                       nomeAlimento: nomedoAlimento1,
                                       qtdAlimento: qtd1,
                                     );
+                                    findAll().then((refeicoes) =>
+                                        debugPrint(refeicoes.toString()));
                                     Navigator.pop(context, newRefeicao);
                                   }
                                   if (nomedoAlimento2 !=

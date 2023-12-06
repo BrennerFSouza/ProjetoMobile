@@ -2,6 +2,8 @@
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:projetomobile/database/app_database.dart';
+import 'package:projetomobile/models/refeicao.dart';
 import 'package:projetomobile/pages/autenticacao_tela.dart';
 import 'package:projetomobile/pages/exercicio_tela.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -15,6 +17,17 @@ void main() async {
     options: DefaultFirebaseOptions.currentPlatform,
   );
   runApp(const MyApp());
+
+  /* save(Refeicao(
+    id: 1,
+    nomeRefeicao: 'teste',
+    nomeAlimento: 'Arroz',
+    qtdAlimento: 111,
+  )).then((id) {
+    findAll().then((refeicoes) => debugPrint(refeicoes.toString()));
+  }); */
+  findAll().then((refeicoes) => debugPrint(refeicoes.toString()));
+
 }
 
 class MyApp extends StatelessWidget {

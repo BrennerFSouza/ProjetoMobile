@@ -1,6 +1,6 @@
 // ignore_for_file: unused_import, unnecessary_null_comparison, unnecessary_import
 // ignore_for_file: avoid_print
-
+import 'package:tuple/tuple.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:projetomobile/models/refeicao.dart';
@@ -44,6 +44,17 @@ class _NovaRefeicaoState extends State<NovaRefeicao> {
     'Banana',
     'Ovo'
   ];
+
+  final arrayItems = [
+  const Tuple2('Arroz', 2.0),
+  const Tuple2('Feijão', 1.5),
+  const Tuple2('Batata', 1.0),
+  const Tuple2('Frango', 3.0),
+  const Tuple2('Pão', 2.5),
+  const Tuple2('Requeijão', 4.0),
+  const Tuple2('Banana', 1.2),
+  const Tuple2('Ovo', 2.8),
+];
 
   @override
   Widget build(BuildContext context) {
@@ -267,6 +278,7 @@ class _NovaRefeicaoState extends State<NovaRefeicao> {
                                       nomeRefeicao: nomeRefeicao,
                                       nomeAlimento: nomedoAlimento1,
                                       qtdAlimento: qtd1,
+                                      kcal: calcularKcal(nomedoAlimento1, qtd1),
                                     );
 
                                     save(newRefeicao);
@@ -281,6 +293,7 @@ class _NovaRefeicaoState extends State<NovaRefeicao> {
                                       nomeRefeicao: nomeRefeicao,
                                       nomeAlimento: nomedoAlimento2,
                                       qtdAlimento: qtd2,
+                                      kcal: calcularKcal(nomedoAlimento2, qtd2),
                                     );
 
                                     save(newRefeicao);
@@ -295,6 +308,7 @@ class _NovaRefeicaoState extends State<NovaRefeicao> {
                                       nomeRefeicao: nomeRefeicao,
                                       nomeAlimento: nomedoAlimento3,
                                       qtdAlimento: qtd3,
+                                      kcal: calcularKcal(nomedoAlimento3, qtd3),
                                     );
 
                                     save(newRefeicao);
@@ -322,6 +336,20 @@ class _NovaRefeicaoState extends State<NovaRefeicao> {
           ),
         ));
   }
+
+  
+
+double calcularKcal(String nomeAlimento, int quantidade) {
+  // Encontre o item correspondente no arrayItems
+  var item = arrayItems.firstWhere(
+    (element) => element.item1 == nomeAlimento,
+    orElse: () => const Tuple2('Não encontrado', 0.0), // Valor padrão se não encontrado
+  );
+
+  // Calcule as calorias
+  double caloriasPorGrama = item.item2;
+  return quantidade * caloriasPorGrama;
+}
 
   DropdownMenuItem<String> buildMenuItem(String item) => DropdownMenuItem(
         value: item,

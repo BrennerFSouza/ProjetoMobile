@@ -4,14 +4,15 @@ import 'package:sqflite/sqflite.dart';
 
 Future<Database> createDatabase() {
   return getDatabasesPath().then((dbPath) {
-    final String path = join(dbPath, 'historicoRefeicao.db');
+    final String path = join(dbPath, 'histRefeicao.db');
     return openDatabase(path, onCreate: (db, version) {
       db.execute('CREATE TABLE refeicoes('
           'id INTEGER PRIMARY KEY, '
           'nomeRefeicao TEXT, '
           'nomeAlimento TEXT, '
-          'qtdAlimento INTEGER)');
-    }, version: 1);
+          'qtdAlimento INTEGER, '
+          'kcal REAL)');
+    }, version: 3);
   });
 }
 
@@ -21,6 +22,7 @@ Future<int> save(Refeicao refeicao) {
     refeicaoMap['nomeRefeicao'] = refeicao.nomeRefeicao;
     refeicaoMap['nomeAlimento'] = refeicao.nomeAlimento;
     refeicaoMap['qtdAlimento'] = refeicao.qtdAlimento;
+    refeicaoMap['kcal'] = refeicao.kcal;
     return db.insert('refeicoes', refeicaoMap);
   });
 }
@@ -35,10 +37,16 @@ Future<List<Refeicao>> findAll() {
           nomeRefeicao: map['nomeRefeicao'],
           nomeAlimento: map['nomeAlimento'],
           qtdAlimento: map['qtdAlimento'],
+          kcal: map['kcal'] ?? 0.0,
         );
         refeicoes.add(refeicao);
       }
       return refeicoes;
     });
   });
+}
+
+Future<void> dropTables(Database db) async {
+  await db.execute('DROP TABLE IF EXISTS refeicoes');
+  // Adicione outras tabelas que você deseja dropar, se houver mais de uma
 }

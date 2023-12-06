@@ -4,18 +4,21 @@ class Refeicao {
   final String nomeRefeicao;
   final String nomeAlimento;
   final int qtdAlimento;
+  final double kcal;
 
   Refeicao({
     required this.id,
     required this.nomeRefeicao,
     required this.nomeAlimento,
     required this.qtdAlimento,
+    required this.kcal,
   });
 
   
 
+
   @override
   String toString() {
-    return 'Refeicao(id: $id, nomeRefeicao: $nomeRefeicao, nomeAlimento: $nomeAlimento, qtdAlimento: $qtdAlimento)';
+    return 'Refeicao(id: $id, nomeRefeicao: $nomeRefeicao, nomeAlimento: $nomeAlimento, qtdAlimento: $qtdAlimento, kcal: $kcal)';
   }
 }

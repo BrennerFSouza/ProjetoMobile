@@ -8,6 +8,8 @@ import 'package:projetomobile/pages/autenticacao_tela.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:projetomobile/pages/form_refeicao.dart';
 import 'package:projetomobile/pages/tela_home.dart';
+import 'package:sqflite/sqflite.dart';
+import 'package:tuple/tuple.dart';
 import 'firebase_options.dart';
 
 void main() async {
@@ -15,6 +17,18 @@ void main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
+  /* 
+  final Refeicao refeicao = Refeicao(
+    id: 0,
+    nomeRefeicao: 'Teste',
+    nomeAlimento: 'Arroz',
+    qtdAlimento: 10,
+    kcal: calcularKcal('Arroz', 10),
+  );
+  save(refeicao); 
+  */
+
+  /* await dropDatabaseTables(); */
   runApp(const MyApp());
   findAll().then((refeicoes) => debugPrint(refeicoes.toString()));
 }
@@ -49,3 +63,38 @@ class RoteadorTela extends StatelessWidget {
         });
   }
 }
+
+Future<void> dropDatabaseTables() async {
+  // Abre o banco de dados
+  Database database = await createDatabase();
+
+  // Chama a função para dropar a tabela
+  await dropTables(database);
+
+  // Fecha o banco de dados
+  await database.close();
+}
+
+double calcularKcal(String nomeAlimento, int quantidade) {
+  // Encontre o item correspondente no arrayItems
+  var item = arrayItems.firstWhere(
+    (element) => element.item1 == nomeAlimento,
+    orElse: () =>
+        const Tuple2('Não encontrado', 0.0), // Valor padrão se não encontrado
+  );
+
+  // Calcule as calorias
+  double caloriasPorGrama = item.item2;
+  return quantidade * caloriasPorGrama;
+}
+
+final arrayItems = [
+  const Tuple2('Arroz', 2.0),
+  const Tuple2('Feijão', 1.5),
+  const Tuple2('Batata', 1.0),
+  const Tuple2('Frango', 3.0),
+  const Tuple2('Pão', 2.5),
+  const Tuple2('Requeijão', 4.0),
+  const Tuple2('Banana', 1.2),
+  const Tuple2('Ovo', 2.8),
+];

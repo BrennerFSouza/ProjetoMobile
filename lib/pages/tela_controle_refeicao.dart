@@ -197,19 +197,8 @@ class _NavigationExampleState extends State<NavigationExample> {
 class _RefeicaoBlock extends StatelessWidget {
   final String nomeRefeicao;
   final List<Refeicao> refeicoes;
-  final items = [
-    'Selecionar Alimento',
-    'Arroz',
-    'Feijão',
-    'Batata',
-    'Frango',
-    'Pão',
-    'Requeijão',
-    'Banana',
-    'Ovo'
-  ];
 
-  _RefeicaoBlock(this.nomeRefeicao, this.refeicoes);
+  const _RefeicaoBlock(this.nomeRefeicao, this.refeicoes);
 
   @override
   Widget build(BuildContext context) {
@@ -226,53 +215,18 @@ class _RefeicaoBlock extends StatelessWidget {
           ),
           const SizedBox(
               height: 8.0), // Adiciona espaço entre o nomeRefeicao e a tabela
-          Table(
-            columnWidths: const {
-              0: FlexColumnWidth(1), // Largura da primeira coluna
-              1: FlexColumnWidth(1), // Largura da segunda coluna
-            },
-            children: [
-              const TableRow(
-                children: [
-                  TableCell(
-                    child: Center(
-                      child: Text(
-                        'Alimento',
-                        style: TextStyle(
-                          fontSize: 18.0,
-                        ),
-                      ),
-                    ),
-                  ),
-                  TableCell(
-                    child: Center(
-                      child: Text(
-                        'Quantidade',
-                        style: TextStyle(
-                          fontSize: 18.0,
-                        ),
-                      ),
-                    ),
-                  ),TableCell(
-                    child: Center(
-                      child: Text(
-                        'Kcal',
-                        style: TextStyle(
-                          fontSize: 18.0,
-                        ),
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-              ...refeicoes.map((refeicao) {
-                return TableRow(
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Table(
+              border: TableBorder.all(),
+              children: [
+                const TableRow(
                   children: [
                     TableCell(
                       child: Center(
                         child: Text(
-                          refeicao.nomeAlimento,
-                          style: const TextStyle(
+                          'Alimento',
+                          style: TextStyle(
                             fontSize: 18.0,
                           ),
                         ),
@@ -281,8 +235,8 @@ class _RefeicaoBlock extends StatelessWidget {
                     TableCell(
                       child: Center(
                         child: Text(
-                          refeicao.qtdAlimento.toString(),
-                          style: const TextStyle(
+                          'Quantidade',
+                          style: TextStyle(
                             fontSize: 18.0,
                           ),
                         ),
@@ -291,19 +245,56 @@ class _RefeicaoBlock extends StatelessWidget {
                     TableCell(
                       child: Center(
                         child: Text(
-                          refeicao.qtdAlimento.toString(),
-                          style: const TextStyle(
+                          'Kcal',
+                          style: TextStyle(
                             fontSize: 18.0,
                           ),
                         ),
                       ),
                     ),
                   ],
-                );
-              }).toList(),
-            ],
+                ),
+                ...refeicoes.map((refeicao) {
+                  return TableRow(
+                    children: [
+                      TableCell(
+                        child: Center(
+                          child: Text(
+                            refeicao.nomeAlimento,
+                            style: const TextStyle(
+                              fontSize: 18.0,
+                            ),
+                          ),
+                        ),
+                      ),
+                      TableCell(
+                        child: Center(
+                          child: Text(
+                            refeicao.qtdAlimento.toString(),
+                            style: const TextStyle(
+                              fontSize: 18.0,
+                            ),
+                          ),
+                        ),
+                      ),
+                      TableCell(
+                        child: Center(
+                          child: Text(
+                            refeicao.kcal.toString(),
+                            style: const TextStyle(
+                              fontSize: 18.0,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  );
+                }).toList(),
+              ],
+            ),
           ),
-        ],
+          const SizedBox(
+              height: 8.0),],
       ),
     );
   }

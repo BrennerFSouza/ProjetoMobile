@@ -18,16 +18,13 @@ void main() async {
   );
   runApp(const MyApp());
 
-  /* save(Refeicao(
+  save(Refeicao(
     id: 1,
-    nomeRefeicao: 'teste',
-    nomeAlimento: 'Arroz',
+    nomeRefeicao: 'café da manhã',
+    nomeAlimento: 'Feijão',
     qtdAlimento: 111,
-  )).then((id) {
-    findAll().then((refeicoes) => debugPrint(refeicoes.toString()));
-  }); */
+  ));
   findAll().then((refeicoes) => debugPrint(refeicoes.toString()));
-
 }
 
 class MyApp extends StatelessWidget {

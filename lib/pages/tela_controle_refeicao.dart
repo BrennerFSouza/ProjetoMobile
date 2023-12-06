@@ -2,6 +2,7 @@
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:projetomobile/database/app_database.dart';
 import 'package:projetomobile/models/refeicao.dart';
 import 'package:projetomobile/pages/form_refeicao.dart';
 import 'package:projetomobile/pages/tela_home.dart';
@@ -31,17 +32,8 @@ class NavigationExample extends StatefulWidget {
 
 class _NavigationExampleState extends State<NavigationExample> {
   int currentPageIndex = 1;
-  final List<Refeicao> refeicoes = [];
   @override
   Widget build(BuildContext context) {
-    refeicoes.add(
-      Refeicao(
-        id: 0,
-        nomeRefeicao: 'Teste111',
-        nomeAlimento: 'Arroz',
-        qtdAlimento: 1234,
-      ),
-    );
     // ignore: unused_local_variable
     final ThemeData theme = Theme.of(context);
     return Scaffold(
@@ -102,12 +94,26 @@ class _NavigationExampleState extends State<NavigationExample> {
             ),
           ],
         ),
-        body: ListView.builder(
-          itemBuilder: (context, index) {
-            final Refeicao refeicao = refeicoes[index];
-            return _RefeicaoItem(refeicao);
+        body: FutureBuilder<List<Refeicao>>(
+          future: findAll(),
+          builder: (context, AsyncSnapshot<List<Refeicao>?> snapshot) {
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return const CircularProgressIndicator(); // ou outro widget de carregamento
+            } else if (snapshot.hasError) {
+              return const Text('Erro ao carregar os dados.');
+            } else if (!snapshot.hasData || snapshot.data == null) {
+              return const Text('Sem dados disponíveis.');
+            } else {
+              final List<Refeicao> refeicoes = snapshot.data!;
+              return ListView.builder(
+                itemBuilder: (context, index) {
+                  final Refeicao refeicao = refeicoes[index];
+                  return _RefeicaoItem(refeicao);
+                },
+                itemCount: refeicoes.length,
+              );
+            }
           },
-          itemCount: refeicoes.length,
         )
 
         // Controle de Refeições

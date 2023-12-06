@@ -5,8 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:projetomobile/pages/tela_controle_refeicao.dart';
 import 'package:projetomobile/services/autenticacao_services.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
-import 'package:projetomobile/models/exercicio_modelo.dart';
-import 'package:projetomobile/models/sentimento_modelo.dart';
 
 class TelaHome extends StatelessWidget {
   const TelaHome({super.key});

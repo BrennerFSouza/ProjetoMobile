@@ -51,6 +51,25 @@ Future<List<Refeicao>> findAll() {
   });
 }
 
+Future<List<Refeicao>> findAllByRefeicaoNome(String nomeRefeicao) {
+  return createDatabase().then((db) {
+    return db.query('refeicoes', where: 'nomeRefeicao = ?', whereArgs: [nomeRefeicao]).then((maps) {
+      final List<Refeicao> refeicoes = [];
+      for (Map<String, dynamic> map in maps) {
+        final Refeicao refeicao = Refeicao(
+          id: map['id'],
+          nomeRefeicao: map['nomeRefeicao'],
+          nomeAlimento: map['nomeAlimento'],
+          qtdAlimento: map['qtdAlimento'],
+          kcal: map['kcal'] ?? 0.0,
+        );
+        refeicoes.add(refeicao);
+      }
+      return refeicoes;
+    });
+  });
+}
+
 
 Future<int> delete(String nomeRefeicao) async {
   final db = await createDatabase();

@@ -27,8 +27,7 @@ void main() async {
   );
   save(refeicao); 
   */
-
-  /* await dropDatabaseTables(); */
+  
   runApp(const MyApp());
   findAll().then((refeicoes) => debugPrint(refeicoes.toString()));
 }
@@ -62,17 +61,6 @@ class RoteadorTela extends StatelessWidget {
           }
         });
   }
-}
-
-Future<void> dropDatabaseTables() async {
-  // Abre o banco de dados
-  Database database = await createDatabase();
-
-  // Chama a função para dropar a tabela
-  await dropTables(database);
-
-  // Fecha o banco de dados
-  await database.close();
 }
 
 double calcularKcal(String nomeAlimento, int quantidade) {

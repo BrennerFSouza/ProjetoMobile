@@ -3,8 +3,8 @@
 import 'package:collection/collection.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:projetomobile/pages/tela_refeicao_edit.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
-
 import 'package:projetomobile/database/app_database.dart';
 import 'package:projetomobile/models/refeicao.dart';
 import 'package:projetomobile/pages/form_refeicao.dart';
@@ -32,6 +32,8 @@ class NavigationExample extends StatefulWidget {
 
 class _NavigationExampleState extends State<NavigationExample> {
   int currentPageIndex = 1;
+  
+  
   @override
   Widget build(BuildContext context) {
     // ignore: unused_local_variable
@@ -156,7 +158,7 @@ class _NavigationExampleState extends State<NavigationExample> {
                             ),
                           ),
                           Text(
-                            '$totalCalorias',
+                            'Kcal: $totalCalorias',
                             style: const TextStyle(
                               fontSize: 18.0,
                               fontWeight: FontWeight.bold,
@@ -165,19 +167,26 @@ class _NavigationExampleState extends State<NavigationExample> {
                         ],
                       ),
                     ),
-
-                    const SizedBox(
-                        height: 16.0),
+                    const SizedBox(height: 16.0),
                     Expanded(
                       child: ListView.builder(
                         itemBuilder: (context, index) {
                           final List<String> keys =
                               groupedRefeicoes.keys.toList();
                           final String key = keys[index];
-                          final List<Refeicao> blocos = groupedRefeicoes[key]!;
+                          final List<Refeicao> blocos =
+                              groupedRefeicoes[key]!;
 
-                          // Aqui, você pode criar um widget para exibir o bloco de itens
-                          return _RefeicaoBlock(key, blocos);
+                          // Use o bloco clicável aqui
+                          return _RefeicaoBlockClickable(
+                            nomeRefeicao: key,
+                            refeicoes: blocos,
+                            onEditComplete: () {
+                              setState(() {
+                                // Atualize o estado ou recarregue os dados aqui
+                              });
+                            },
+                          );
                         },
                         itemCount: groupedRefeicoes.length,
                       ),
@@ -381,45 +390,36 @@ class _RefeicaoBlock extends StatelessWidget {
   }
 }
 
-/* 
-class _RefeicaoItem extends StatelessWidget {
-  final Refeicao refeicao;
+class _RefeicaoBlockClickable extends StatelessWidget {
+  final String nomeRefeicao;
+  final List<Refeicao> refeicoes;
+  final VoidCallback onEditComplete; // Adiciona essa linha
 
-  const _RefeicaoItem(
-    Key? key,
-    this.refeicao,
-  ) : super(key: key);
+  const _RefeicaoBlockClickable({
+    required this.nomeRefeicao,
+    required this.refeicoes,
+    required this.onEditComplete, // Adiciona essa linha
+  });
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      child: ListTile(
-        title: Text(
-          refeicao.nomeRefeicao,
-          style: const TextStyle(
-            fontSize: 24.0,
+    return InkWell(
+      onTap: () async {
+        final result = await Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => EditRefeicao(nomeRefeicao),
           ),
-        ),
-        subtitle: Row(
-          children: [
-            Text(
-              refeicao.nomeAlimento,
-              style: const TextStyle(
-                fontSize: 18.0,
-              ),
-            ),
-            Text(
-              refeicao.qtdAlimento.toString(),
-              style: const TextStyle(
-                fontSize: 18.0,
-              ),
-            ),
-          ],
-        ),
-      ),
+        );
+        if (result != null && result == true) {
+          onEditComplete(); // Chama a função de retorno
+        }
+      },
+      child: _RefeicaoBlock(nomeRefeicao, refeicoes),
     );
   }
 }
- */
+
+
 
 

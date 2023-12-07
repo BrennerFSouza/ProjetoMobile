@@ -32,6 +32,36 @@ Future<int> save(Refeicao refeicao) {
   });
 }
 
+Future<int> updateRefeicaoNome(String oldNome, String newNome) async {
+  final db = await createDatabase();
+
+  // Consulta as refeições que têm o nome antigo
+  final List<Map<String, Object?>> refeicoesAntigas = await db.query(
+    'refeicoes',
+    where: 'nomeRefeicao = ?',
+    whereArgs: [oldNome],
+  );
+
+  // Atualiza os nomes nas refeições
+  for (Map<String, Object?> refeicaoMap in refeicoesAntigas) {
+    final int id = refeicaoMap['id'] as int;
+    final Map<String, dynamic> newRefeicaoMap = {
+      'nomeRefeicao': newNome,
+    };
+
+    // Atualiza a refeição com o novo nome
+    await db.update(
+      'refeicoes',
+      newRefeicaoMap,
+      where: 'id = ?',
+      whereArgs: [id],
+    );
+  }
+
+  return refeicoesAntigas.length;
+}
+
+
 Future<List<Refeicao>> findAll() {
   return createDatabase().then((db) {
     return db.query('refeicoes').then((maps) {

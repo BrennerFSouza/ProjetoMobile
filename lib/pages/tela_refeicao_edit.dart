@@ -27,12 +27,8 @@ class _EditRefeicaoState extends State<EditRefeicao> {
   @override
   Widget build(BuildContext context) {
     String nomeRefeicao = widget.nomeRefeicao;
-
-    findAllByRefeicaoNome(nomeRefeicao).then((refeicoes) {
-      // Faça algo com a lista de refeições recuperadas
-      print(refeicoes);
-    });
     return Scaffold(
+      backgroundColor: const Color(0xFF364E7B),
       appBar: AppBar(
         title: const Text('Editar Refeição'),
       ),
@@ -60,6 +56,9 @@ class _EditRefeicaoState extends State<EditRefeicao> {
                       filled: true,
                     ),
                   ),
+                ),
+                const SizedBox(
+                  height: 10.0,
                 ),
                 Expanded(
                   child: FutureBuilder<List<Refeicao>>(
@@ -100,7 +99,15 @@ class _EditRefeicaoState extends State<EditRefeicao> {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           ElevatedButton.icon(
-                            onPressed: () {},
+                            onPressed: () {
+                              final String newnomeRefeicao =
+                                  _refeicaoController.text;
+
+                              if (newnomeRefeicao != nomeRefeicao) {
+                                updateRefeicaoNome(nomeRefeicao, newnomeRefeicao);
+                              }
+                              Navigator.pop(context, true);
+                            },
                             icon: const Icon(Icons.save),
                             label: const Text('Salvar'),
                           ),
@@ -140,7 +147,6 @@ class _AlimentoBlock extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.all(8.0),
             child: Table(
-              /* border: TableBorder.all(), */
               children: [
                 const TableRow(
                   children: [

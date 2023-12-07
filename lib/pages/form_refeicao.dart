@@ -71,6 +71,12 @@ class _NovaRefeicaoState extends State<NovaRefeicao> {
             ),
           ],
         ),
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back), // Ícone de voltar
+          onPressed: () {
+            Navigator.of(context).pop(true);
+          },
+        ),
       ),
       body: Center(
         child: SingleChildScrollView(
@@ -228,14 +234,11 @@ class _NovaRefeicaoState extends State<NovaRefeicao> {
                 Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    const SizedBox(
-                        height: 25.0), 
+                    const SizedBox(height: 25.0),
                     Padding(
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 30.0), 
+                      padding: const EdgeInsets.symmetric(horizontal: 30.0),
                       child: Row(
-                        mainAxisAlignment: MainAxisAlignment
-                            .spaceBetween, 
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           ElevatedButton(
                             onPressed: () {

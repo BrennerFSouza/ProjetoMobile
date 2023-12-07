@@ -32,6 +32,12 @@ class _EditRefeicaoState extends State<EditRefeicao> {
       backgroundColor: const Color(0xFF364E7B),
       appBar: AppBar(
         title: const Text('Editar Refeição'),
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back), // Ícone de voltar
+          onPressed: () {
+            Navigator.of(context).pop(true);
+          },
+        ),
       ),
       body: Center(
         child: SingleChildScrollView(
@@ -237,7 +243,7 @@ class _AlimentoBlockClickable extends StatelessWidget {
 
   const _AlimentoBlockClickable({
     required this.refeicao,
-    required this.onEditComplete, 
+    required this.onEditComplete,
   });
 
   @override
@@ -248,9 +254,7 @@ class _AlimentoBlockClickable extends StatelessWidget {
           context,
           MaterialPageRoute(
             builder: (context) => EditAlimento(
-                refeicao.id,
-                refeicao.nomeAlimento,
-                refeicao.qtdAlimento),
+                refeicao.id, refeicao.nomeAlimento, refeicao.qtdAlimento),
           ),
         );
         if (result != null && result == true) {

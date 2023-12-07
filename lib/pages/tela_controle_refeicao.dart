@@ -165,9 +165,9 @@ class _NavigationExampleState extends State<NavigationExample> {
                         ],
                       ),
                     ),
-                    
+
                     const SizedBox(
-                        height: 16.0), // Espaçamento para separar do ListView
+                        height: 16.0),
                     Expanded(
                       child: ListView.builder(
                         itemBuilder: (context, index) {

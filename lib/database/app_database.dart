@@ -16,7 +16,7 @@ Future<Database> createDatabase() {
             'kcal REAL)');
       },
       version: 1,
-      onDowngrade: onDatabaseDowngradeDelete,
+      /* onDowngrade: onDatabaseDowngradeDelete, */
     );
   });
 }
@@ -51,7 +51,12 @@ Future<List<Refeicao>> findAll() {
   });
 }
 
-Future<void> dropTables(Database db) async {
-  await db.execute('DROP TABLE IF EXISTS refeicoes');
-  // Adicione outras tabelas que você deseja dropar, se houver mais de uma
+
+Future<int> delete(String nomeRefeicao) async {
+  final db = await createDatabase();
+  return await db.delete(
+    'refeicoes',
+    where: 'nomeRefeicao = ?',
+    whereArgs: [nomeRefeicao],
+  );
 }

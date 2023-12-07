@@ -5,14 +5,19 @@ import 'package:sqflite/sqflite.dart';
 Future<Database> createDatabase() {
   return getDatabasesPath().then((dbPath) {
     final String path = join(dbPath, 'histRefeicao.db');
-    return openDatabase(path, onCreate: (db, version) {
-      db.execute('CREATE TABLE refeicoes('
-          'id INTEGER PRIMARY KEY, '
-          'nomeRefeicao TEXT, '
-          'nomeAlimento TEXT, '
-          'qtdAlimento INTEGER, '
-          'kcal REAL)');
-    }, version: 3);
+    return openDatabase(
+      path,
+      onCreate: (db, version) {
+        db.execute('CREATE TABLE refeicoes('
+            'id INTEGER PRIMARY KEY, '
+            'nomeRefeicao TEXT, '
+            'nomeAlimento TEXT, '
+            'qtdAlimento INTEGER, '
+            'kcal REAL)');
+      },
+      version: 1,
+      onDowngrade: onDatabaseDowngradeDelete,
+    );
   });
 }
 

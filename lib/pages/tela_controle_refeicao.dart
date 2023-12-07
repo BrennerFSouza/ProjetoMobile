@@ -39,6 +39,14 @@ class _NavigationExampleState extends State<NavigationExample> {
     return Scaffold(
       backgroundColor: const Color(0xFF364E7B),
       appBar: AppBar(
+        elevation: 0,
+        bottom: PreferredSize(
+          preferredSize: const Size.fromHeight(2.0), // Altura da borda
+          child: Container(
+            color: Colors.grey[200], // Cor da borda
+            height: 2.0,
+          ),
+        ),
         title: const Text(
           "Dashboard",
           style: TextStyle(
@@ -112,23 +120,96 @@ class _NavigationExampleState extends State<NavigationExample> {
                 ); // ou outro widget de carregamento
               } else if (snapshot.hasError) {
                 return const Text('Erro ao carregar os dados.');
-              } else if (!snapshot.hasData || snapshot.data == null) {
-                return const Text('Sem dados disponíveis.');
-              } else {
+              } else if (snapshot.hasData && snapshot.data!.isNotEmpty) {
                 final List<Refeicao> refeicoes = snapshot.data!;
                 final Map<String, List<Refeicao>> groupedRefeicoes = groupBy(
                     refeicoes, (Refeicao refeicao) => refeicao.nomeRefeicao);
+                final double totalCalorias = refeicoes.fold(
+                  0.0,
+                  (double sum, Refeicao refeicao) => sum + refeicao.kcal,
+                );
+                return Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Container(
+                      width: double.infinity,
+                      decoration: const BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.only(
+                          topLeft: Radius.circular(0.0),
+                          topRight: Radius.circular(0.0),
+                          bottomLeft:
+                              Radius.circular(10.0), // Borda inferior esquerda
+                          bottomRight:
+                              Radius.circular(10.0), // Borda inferior direita
+                        ),
+                      ),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          const SizedBox(height: 2.0),
+                          const Text(
+                            'Total de Calorias',
+                            style: TextStyle(
+                              fontSize: 24.0,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          Text(
+                            '$totalCalorias',
+                            style: const TextStyle(
+                              fontSize: 18.0,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    
+                    const SizedBox(
+                        height: 16.0), // Espaçamento para separar do ListView
+                    Expanded(
+                      child: ListView.builder(
+                        itemBuilder: (context, index) {
+                          final List<String> keys =
+                              groupedRefeicoes.keys.toList();
+                          final String key = keys[index];
+                          final List<Refeicao> blocos = groupedRefeicoes[key]!;
 
-                return ListView.builder(
-                  itemBuilder: (context, index) {
-                    final List<String> keys = groupedRefeicoes.keys.toList();
-                    final String key = keys[index];
-                    final List<Refeicao> blocos = groupedRefeicoes[key]!;
-
-                    // Aqui, você pode criar um widget para exibir o bloco de itens
-                    return _RefeicaoBlock(key, blocos);
-                  },
-                  itemCount: groupedRefeicoes.length,
+                          // Aqui, você pode criar um widget para exibir o bloco de itens
+                          return _RefeicaoBlock(key, blocos);
+                        },
+                        itemCount: groupedRefeicoes.length,
+                      ),
+                    ),
+                  ],
+                );
+              } else {
+                return Center(
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Container(
+                        padding: const EdgeInsets.all(8.0),
+                        decoration: const BoxDecoration(
+                          shape: BoxShape.circle,
+                          color: Colors.blue,
+                        ),
+                        child: const Icon(Icons.info, color: Colors.white),
+                      ),
+                      const SizedBox(width: 8.0),
+                      const Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text('Tabela Vazia',
+                              style: TextStyle(color: Colors.white)),
+                          SizedBox(width: 8.0),
+                          Text('Insira novas refeições',
+                              style: TextStyle(color: Colors.white)),
+                        ],
+                      ),
+                    ],
+                  ),
                 );
               }
             },
@@ -293,8 +374,8 @@ class _RefeicaoBlock extends StatelessWidget {
               ],
             ),
           ),
-          const SizedBox(
-              height: 8.0),],
+          const SizedBox(height: 8.0),
+        ],
       ),
     );
   }
@@ -340,3 +421,5 @@ class _RefeicaoItem extends StatelessWidget {
   }
 }
  */
+
+

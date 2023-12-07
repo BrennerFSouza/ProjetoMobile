@@ -1,11 +1,10 @@
-// ignore_for_file: avoid_print, unused_import
+// ignore_for_file: avoid_print
 
 import 'package:flutter/material.dart';
 import 'package:projetomobile/_comum/snackbar_authentication.dart';
 import 'package:projetomobile/_comum/minhascores.dart';
 import 'package:projetomobile/components/decoration_camp_authentication.dart';
 import 'package:projetomobile/services/autenticacao_services.dart';
-import 'package:projetomobile/pages/tela_home.dart';
 
 class AutenticacaoTela extends StatefulWidget {
   const AutenticacaoTela({super.key});

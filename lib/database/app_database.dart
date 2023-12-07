@@ -61,11 +61,13 @@ Future<int> updateRefeicaoNome(String oldNome, String newNome) async {
   return refeicoesAntigas.length;
 }
 
-Future<int> updateAlimento(int id, String nomeAlimento, int qtdAlimento) async {
+Future<int> updateAlimento(int id, String nomeAlimento, int qtdAlimento, double kcal) async {
   final db = await createDatabase();
+  final double kcalArredondado = double.parse(kcal.toStringAsFixed(2)); //arredonda a duas casas decimais
   final Map<String, dynamic> alimentoMap = {
     'nomeAlimento': nomeAlimento,
     'qtdAlimento': qtdAlimento,
+    'kcal': kcalArredondado,
   };
 
   return await db.update(

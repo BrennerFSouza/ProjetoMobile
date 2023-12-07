@@ -1,10 +1,7 @@
-// ignore_for_file: unused_import
 
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:projetomobile/pages/tela_controle_refeicao.dart';
 import 'package:projetomobile/services/autenticacao_services.dart';
-import 'package:syncfusion_flutter_charts/charts.dart';
 
 class TelaHome extends StatelessWidget {
   const TelaHome({super.key});

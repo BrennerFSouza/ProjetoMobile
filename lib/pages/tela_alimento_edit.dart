@@ -1,10 +1,31 @@
-// ignore_for_file: unused_import, unnecessary_null_comparison, unnecessary_import
+// ignore_for_file: unused_import, unnecessary_null_comparison
 
 import 'dart:ffi';
-
+import 'package:tuple/tuple.dart';
 import 'package:flutter/material.dart';
 import 'package:projetomobile/models/refeicao.dart';
 import 'package:projetomobile/database/app_database.dart';
+
+final items = [
+    'Arroz',
+    'Feijão',
+    'Batata',
+    'Frango',
+    'Pão',
+    'Requeijão',
+    'Banana',
+    'Ovo'
+  ];
+  final arrayItems = [
+    const Tuple2('Arroz', 2.0),
+    const Tuple2('Feijão', 1.5),
+    const Tuple2('Batata', 1.0),
+    const Tuple2('Frango', 3.0),
+    const Tuple2('Pão', 2.5),
+    const Tuple2('Requeijão', 4.0),
+    const Tuple2('Banana', 1.2),
+    const Tuple2('Ovo', 2.8),
+  ];
 
 class EditAlimento extends StatefulWidget {
   final int id;
@@ -28,17 +49,7 @@ class _EditAlimentoState extends State<EditAlimento> {
     newnomeAlimento = widget.nomeAlimento;
   }
 
-  final items = [
-    'Arroz',
-    'Feijão',
-    'Batata',
-    'Frango',
-    'Pão',
-    'Requeijão',
-    'Banana',
-    'Ovo'
-  ];
-
+  
   @override
   Widget build(BuildContext context) {
     final int id = widget.id;
@@ -122,12 +133,10 @@ class _EditAlimentoState extends State<EditAlimento> {
                                   newnomeAlimento!;
                               final int? newqtd =
                                   int.tryParse(_qtdController.text);
-
-                              print(nomedoNovoAlimento);
-                              print(newqtd);
-                              if (nomedoNovoAlimento != null && newqtd != null ) {
-                              updateAlimento(id, nomedoNovoAlimento, newqtd);
-                                
+                              if (nomedoNovoAlimento != null &&
+                                  newqtd != null) {
+                                final double kcal = calcularKcal(nomedoNovoAlimento, newqtd);
+                                updateAlimento(id, nomedoNovoAlimento, newqtd,kcal);
                               }
 
                               Navigator.pop(context, true);
@@ -155,4 +164,17 @@ class _EditAlimentoState extends State<EditAlimento> {
       ),
     );
   }
+}
+
+double calcularKcal(String nomeAlimento, int quantidade) {
+  // Encontre o item correspondente no arrayItems
+  var item = arrayItems.firstWhere(
+    (element) => element.item1 == nomeAlimento,
+    orElse: () =>
+        const Tuple2('Não encontrado', 0.0), // Valor padrão se não encontrado
+  );
+
+  // Calcule as calorias
+  double caloriasPorGrama = item.item2;
+  return quantidade * caloriasPorGrama;
 }

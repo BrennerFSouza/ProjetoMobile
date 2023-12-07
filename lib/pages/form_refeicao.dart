@@ -1,10 +1,8 @@
-// ignore_for_file: unused_import, unnecessary_null_comparison, unnecessary_import
+// ignore_for_file: unnecessary_null_comparison
 // ignore_for_file: avoid_print
 import 'package:tuple/tuple.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:projetomobile/models/refeicao.dart';
-
 import '../database/app_database.dart';
 
 class NovaRefeicao extends StatefulWidget {

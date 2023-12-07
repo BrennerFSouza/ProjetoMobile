@@ -1,14 +1,11 @@
-// ignore_for_file: unused_import
+
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:projetomobile/database/app_database.dart';
-import 'package:projetomobile/models/refeicao.dart';
 import 'package:projetomobile/pages/autenticacao_tela.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'package:projetomobile/pages/form_refeicao.dart';
 import 'package:projetomobile/pages/tela_home.dart';
-import 'package:sqflite/sqflite.dart';
 import 'package:tuple/tuple.dart';
 import 'firebase_options.dart';
 

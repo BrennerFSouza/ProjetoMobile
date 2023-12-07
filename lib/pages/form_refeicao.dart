@@ -27,7 +27,6 @@ class _NovaRefeicaoState extends State<NovaRefeicao> {
   void initState() {
     super.initState();
 
-    // Defina o valor inicial desejado para nomeAlimento1
     nomeAlimento1 = 'Selecionar Alimento';
     nomeAlimento2 = 'Selecionar Alimento';
     nomeAlimento3 = 'Selecionar Alimento';
@@ -119,7 +118,6 @@ class _NovaRefeicaoState extends State<NovaRefeicao> {
                         return DropdownMenuItem<String>(
                           value: value,
                           child: Center(
-                            // Centraliza o texto dentro do DropdownMenuItem
                             child: Text(value, textAlign: TextAlign.center),
                           ),
                         );
@@ -163,7 +161,6 @@ class _NovaRefeicaoState extends State<NovaRefeicao> {
                         return DropdownMenuItem<String>(
                           value: value,
                           child: Center(
-                            // Centraliza o texto dentro do DropdownMenuItem
                             child: Text(value, textAlign: TextAlign.center),
                           ),
                         );
@@ -206,7 +203,6 @@ class _NovaRefeicaoState extends State<NovaRefeicao> {
                         return DropdownMenuItem<String>(
                           value: value,
                           child: Center(
-                            // Centraliza o texto dentro do DropdownMenuItem
                             child: Text(value, textAlign: TextAlign.center),
                           ),
                         );
@@ -235,13 +231,13 @@ class _NovaRefeicaoState extends State<NovaRefeicao> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     const SizedBox(
-                        height: 25.0), // Adiciona espaço acima da Row
+                        height: 25.0), 
                     Padding(
                       padding: const EdgeInsets.symmetric(
-                          horizontal: 30.0), // Adiciona espaçamento horizontal
+                          horizontal: 30.0), 
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment
-                            .spaceBetween, // Alinha os botões nas extremidades
+                            .spaceBetween, 
                         children: [
                           ElevatedButton(
                             onPressed: () {

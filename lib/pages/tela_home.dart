@@ -57,7 +57,7 @@ class _NavigationExampleState extends State<NavigationExample> {
             currentPageIndex = index;
           });
 
-          // Adicione a lógica para navegar para a página correspondente
+          
           switch (index) {
             /* 
             Não fazer nada caso já esteja na tela Home
@@ -77,11 +77,11 @@ class _NavigationExampleState extends State<NavigationExample> {
                       const TelaControleRefeicao(),
                   transitionsBuilder:
                       (context, animation, secondaryAnimation, child) {
-                    // Aqui definimos uma transição que não realiza nenhuma animação visível
+                  
                     return child;
                   },
                   transitionDuration: Duration
-                      .zero, // Define a duração da transição como zero para desativar a animação
+                      .zero, 
                 ),
               );
               break;
@@ -96,14 +96,13 @@ class _NavigationExampleState extends State<NavigationExample> {
             label: 'Home',
           ),
           NavigationDestination(
-            selectedIcon: Icon(Icons.home),
-            icon: Icon(Icons.home_outlined),
+            selectedIcon: Icon(Icons.local_dining),
+            icon: Icon(Icons.local_dining),
             label: 'Controle de Refeições',
           ),
         ],
       ),
       body: <Widget>[
-        /// Home page
         const Card(
           shadowColor: Colors.transparent,
           margin: EdgeInsets.all(8.0),

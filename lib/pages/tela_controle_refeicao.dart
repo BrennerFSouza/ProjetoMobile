@@ -32,8 +32,7 @@ class NavigationExample extends StatefulWidget {
 
 class _NavigationExampleState extends State<NavigationExample> {
   int currentPageIndex = 1;
-  
-  
+
   @override
   Widget build(BuildContext context) {
     // ignore: unused_local_variable
@@ -43,14 +42,14 @@ class _NavigationExampleState extends State<NavigationExample> {
       appBar: AppBar(
         elevation: 0,
         bottom: PreferredSize(
-          preferredSize: const Size.fromHeight(2.0), // Altura da borda
+          preferredSize: const Size.fromHeight(2.0),
           child: Container(
-            color: Colors.grey[200], // Cor da borda
+            color: Colors.grey[200],
             height: 2.0,
           ),
         ),
         title: const Text(
-          "Dashboard",
+          "Controle de Refeições",
           style: TextStyle(
             fontWeight: FontWeight.bold,
             fontSize: 22,
@@ -71,7 +70,6 @@ class _NavigationExampleState extends State<NavigationExample> {
           setState(() {
             currentPageIndex = index;
           });
-          // Switch da tela
           switch (index) {
             case 0:
               Navigator.pushReplacement(
@@ -98,8 +96,8 @@ class _NavigationExampleState extends State<NavigationExample> {
             label: 'Home',
           ),
           NavigationDestination(
-            selectedIcon: Icon(Icons.home),
-            icon: Icon(Icons.home_outlined),
+            selectedIcon: Icon(Icons.local_dining),
+            icon: Icon(Icons.local_dining),
             label: 'Controle de Refeições',
           ),
         ],
@@ -116,10 +114,13 @@ class _NavigationExampleState extends State<NavigationExample> {
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: <Widget>[
                       CircularProgressIndicator(),
-                      Text('Loading...'),
+                      Text(
+                        'Loading...',
+                        style: TextStyle(color: Colors.white),
+                      ),
                     ],
                   ),
-                ); // ou outro widget de carregamento
+                );
               } else if (snapshot.hasError) {
                 return const Text('Erro ao carregar os dados.');
               } else if (snapshot.hasData && snapshot.data!.isNotEmpty) {
@@ -140,10 +141,8 @@ class _NavigationExampleState extends State<NavigationExample> {
                         borderRadius: BorderRadius.only(
                           topLeft: Radius.circular(0.0),
                           topRight: Radius.circular(0.0),
-                          bottomLeft:
-                              Radius.circular(10.0), // Borda inferior esquerda
-                          bottomRight:
-                              Radius.circular(10.0), // Borda inferior direita
+                          bottomLeft: Radius.circular(10.0),
+                          bottomRight: Radius.circular(10.0),
                         ),
                       ),
                       child: Column(
@@ -174,17 +173,13 @@ class _NavigationExampleState extends State<NavigationExample> {
                           final List<String> keys =
                               groupedRefeicoes.keys.toList();
                           final String key = keys[index];
-                          final List<Refeicao> blocos =
-                              groupedRefeicoes[key]!;
+                          final List<Refeicao> blocos = groupedRefeicoes[key]!;
 
-                          // Use o bloco clicável aqui
                           return _RefeicaoBlockClickable(
                             nomeRefeicao: key,
                             refeicoes: blocos,
                             onEditComplete: () {
-                              setState(() {
-                                // Atualize o estado ou recarregue os dados aqui
-                              });
+                              setState(() {});
                             },
                           );
                         },
@@ -244,43 +239,6 @@ class _NavigationExampleState extends State<NavigationExample> {
         ],
       ),
     );
-    // Controle de Refeições
-    /* Stack(
-        children: [
-          const Card(
-            shadowColor: Colors.transparent,
-            margin: EdgeInsets.all(8.0),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                Center(child: Text('Tela com as refeições salvas no Firebase')),
-                Center(
-                    child:
-                        Text('Esperando fazer conexão com o Banco de Dados.')),
-                Center(child: Text('Em produção...')),
-              ],
-            ),
-          ),
-          Positioned(
-            bottom: 16.0,
-            right: 16.0,
-            child: FloatingActionButton(
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => const NovaRefeicao(),
-                  ),
-                ).then(
-                  (newRefeicao) => debugPrint(newRefeicao.toString()),
-                );
-              },
-              child: const Icon(Icons.add),
-            ),
-          ),
-        ],
-      ), */
   }
 }
 
@@ -303,8 +261,7 @@ class _RefeicaoBlock extends StatelessWidget {
               fontWeight: FontWeight.bold,
             ),
           ),
-          const SizedBox(
-              height: 8.0), // Adiciona espaço entre o nomeRefeicao e a tabela
+          const SizedBox(height: 8.0),
           Padding(
             padding: const EdgeInsets.all(8.0),
             child: Table(
@@ -393,12 +350,12 @@ class _RefeicaoBlock extends StatelessWidget {
 class _RefeicaoBlockClickable extends StatelessWidget {
   final String nomeRefeicao;
   final List<Refeicao> refeicoes;
-  final VoidCallback onEditComplete; // Adiciona essa linha
+  final VoidCallback onEditComplete;
 
   const _RefeicaoBlockClickable({
     required this.nomeRefeicao,
     required this.refeicoes,
-    required this.onEditComplete, // Adiciona essa linha
+    required this.onEditComplete,
   });
 
   @override
@@ -412,14 +369,10 @@ class _RefeicaoBlockClickable extends StatelessWidget {
           ),
         );
         if (result != null && result == true) {
-          onEditComplete(); // Chama a função de retorno
+          onEditComplete();
         }
       },
       child: _RefeicaoBlock(nomeRefeicao, refeicoes),
     );
   }
 }
-
-
-
-

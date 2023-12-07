@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:projetomobile/models/refeicao.dart';
 import 'package:projetomobile/database/app_database.dart';
+import 'package:projetomobile/pages/tela_alimento_edit.dart';
 
 class EditRefeicao extends StatefulWidget {
   final String nomeRefeicao;
@@ -65,17 +66,33 @@ class _EditRefeicaoState extends State<EditRefeicao> {
                     future: findAllByRefeicaoNome(nomeRefeicao),
                     builder: (context, snapshot) {
                       if (snapshot.connectionState == ConnectionState.waiting) {
-                        return const CircularProgressIndicator();
+                        return const Center(
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: <Widget>[
+                              CircularProgressIndicator(),
+                              Text(
+                                'Loading...',
+                                style: TextStyle(color: Colors.white),
+                              ),
+                            ],
+                          ),
+                        );
                       } else if (snapshot.hasError) {
                         return Text('Erro: ${snapshot.error}');
                       } else {
                         final List<Refeicao> refeicoes = snapshot.data ?? [];
-                        // Use o bloco clicável aqui
                         return ListView.builder(
                           itemBuilder: (context, index) {
                             final Refeicao refeicao = refeicoes[index];
                             return _AlimentoBlockClickable(
                               refeicao: refeicao,
+                              onEditComplete: () {
+                                setState(
+                                  () {},
+                                );
+                              },
                             );
                           },
                           itemCount: refeicoes.length,
@@ -104,7 +121,8 @@ class _EditRefeicaoState extends State<EditRefeicao> {
                                   _refeicaoController.text;
 
                               if (newnomeRefeicao != nomeRefeicao) {
-                                updateRefeicaoNome(nomeRefeicao, newnomeRefeicao);
+                                updateRefeicaoNome(
+                                    nomeRefeicao, newnomeRefeicao);
                               }
                               Navigator.pop(context, true);
                             },
@@ -113,7 +131,7 @@ class _EditRefeicaoState extends State<EditRefeicao> {
                           ),
                           ElevatedButton.icon(
                             onPressed: () {
-                              delete(nomeRefeicao);
+                              deleteRefeicao(nomeRefeicao);
                               Navigator.pop(context, true);
                             },
                             icon: const Icon(Icons.delete),
@@ -215,16 +233,30 @@ class _AlimentoBlock extends StatelessWidget {
 
 class _AlimentoBlockClickable extends StatelessWidget {
   final Refeicao refeicao;
+  final VoidCallback onEditComplete;
 
   const _AlimentoBlockClickable({
     required this.refeicao,
+    required this.onEditComplete, 
   });
 
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: () {
-        // Implemente a navegação para a página de edição de alimento, se necessário
+      onTap: () async {
+        final result = await Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => EditAlimento(
+                refeicao.id,
+                refeicao.nomeAlimento,
+                refeicao.qtdAlimento),
+          ),
+        );
+        if (result != null && result == true) {
+          onEditComplete();
+          print('deu certo');
+        }
       },
       child: _AlimentoBlock(refeicao),
     );

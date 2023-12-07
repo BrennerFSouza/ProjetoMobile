@@ -61,6 +61,21 @@ Future<int> updateRefeicaoNome(String oldNome, String newNome) async {
   return refeicoesAntigas.length;
 }
 
+Future<int> updateAlimento(int id, String nomeAlimento, int qtdAlimento) async {
+  final db = await createDatabase();
+  final Map<String, dynamic> alimentoMap = {
+    'nomeAlimento': nomeAlimento,
+    'qtdAlimento': qtdAlimento,
+  };
+
+  return await db.update(
+    'refeicoes', // Nome da tabela
+    alimentoMap,
+    where: 'id = ?',
+    whereArgs: [id],
+  );
+}
+
 
 Future<List<Refeicao>> findAll() {
   return createDatabase().then((db) {
@@ -100,12 +115,38 @@ Future<List<Refeicao>> findAllByRefeicaoNome(String nomeRefeicao) {
   });
 }
 
+Future<Refeicao?> findById(int id) {
+  return createDatabase().then((db) {
+    return db.query('refeicoes', where: 'id = ?', whereArgs: [id]).then((maps) {
+      if (maps.isNotEmpty) {
+        final Map<String, dynamic> map = maps.first;
+        return Refeicao(
+          id: map['id'],
+          nomeRefeicao: map['nomeRefeicao'],
+          nomeAlimento: map['nomeAlimento'],
+          qtdAlimento: map['qtdAlimento'],
+          kcal: map['kcal'] ?? 0.0,
+        );
+      }
+      return null; // Retorna null se não encontrar nenhuma correspondência.
+    });
+  });
+}
 
-Future<int> delete(String nomeRefeicao) async {
+Future<int> deleteRefeicao(String nomeRefeicao) async {
   final db = await createDatabase();
   return await db.delete(
     'refeicoes',
     where: 'nomeRefeicao = ?',
     whereArgs: [nomeRefeicao],
+  );
+}
+
+Future<int> deleteAlimento(int id) async {
+  final db = await createDatabase();
+  return await db.delete(
+    'refeicoes', // Substitua pelo nome da tabela correspondente aos alimentos
+    where: 'id = ?',
+    whereArgs: [id],
   );
 }

@@ -1,9 +1,8 @@
-// ignore_for_file: unused_import, unnecessary_null_comparison
 
-import 'dart:ffi';
+// ignore_for_file: unnecessary_null_comparison, file_names
+
 import 'package:tuple/tuple.dart';
 import 'package:flutter/material.dart';
-import 'package:projetomobile/models/refeicao.dart';
 import 'package:projetomobile/database/app_database.dart';
 
 final items = [

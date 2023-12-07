@@ -2,13 +2,13 @@ import 'package:path/path.dart';
 import 'package:projetomobile/models/refeicao.dart';
 import 'package:sqflite/sqflite.dart';
 
-Future<Database> createDatabase() {
-  return getDatabasesPath().then((dbPath) {
+Future<Database> createDatabase() async {
+  return await getDatabasesPath().then((dbPath) async {
     final String path = join(dbPath, 'histRefeicao.db');
-    return openDatabase(
+    return await openDatabase(
       path,
-      onCreate: (db, version) {
-        db.execute('CREATE TABLE refeicoes('
+      onCreate: (db, version) async {
+        await db.execute('CREATE TABLE refeicoes('
             'id INTEGER PRIMARY KEY, '
             'nomeRefeicao TEXT, '
             'nomeAlimento TEXT, '
@@ -20,36 +20,28 @@ Future<Database> createDatabase() {
     );
   });
 }
-
-Future<int> save(Refeicao refeicao) {
-  return createDatabase().then((db) {
-    final Map<String, dynamic> refeicaoMap = {};
-    refeicaoMap['nomeRefeicao'] = refeicao.nomeRefeicao;
-    refeicaoMap['nomeAlimento'] = refeicao.nomeAlimento;
-    refeicaoMap['qtdAlimento'] = refeicao.qtdAlimento;
-    refeicaoMap['kcal'] = refeicao.kcal;
-    return db.insert('refeicoes', refeicaoMap);
-  });
+Future<int> save(Refeicao refeicao) async {
+  final db = await createDatabase();
+  final Map<String, dynamic> refeicaoMap = {};
+  refeicaoMap['nomeRefeicao'] = refeicao.nomeRefeicao;
+  refeicaoMap['nomeAlimento'] = refeicao.nomeAlimento;
+  refeicaoMap['qtdAlimento'] = refeicao.qtdAlimento;
+  refeicaoMap['kcal'] = refeicao.kcal;
+  return await db.insert('refeicoes', refeicaoMap);
 }
 
 Future<int> updateRefeicaoNome(String oldNome, String newNome) async {
   final db = await createDatabase();
-
-  // Consulta as refeições que têm o nome antigo
   final List<Map<String, Object?>> refeicoesAntigas = await db.query(
     'refeicoes',
     where: 'nomeRefeicao = ?',
     whereArgs: [oldNome],
   );
-
-  // Atualiza os nomes nas refeições
   for (Map<String, Object?> refeicaoMap in refeicoesAntigas) {
     final int id = refeicaoMap['id'] as int;
     final Map<String, dynamic> newRefeicaoMap = {
       'nomeRefeicao': newNome,
     };
-
-    // Atualiza a refeição com o novo nome
     await db.update(
       'refeicoes',
       newRefeicaoMap,
@@ -57,45 +49,40 @@ Future<int> updateRefeicaoNome(String oldNome, String newNome) async {
       whereArgs: [id],
     );
   }
-
   return refeicoesAntigas.length;
 }
 
 Future<int> updateAlimento(int id, String nomeAlimento, int qtdAlimento, double kcal) async {
   final db = await createDatabase();
-  final double kcalArredondado = double.parse(kcal.toStringAsFixed(2)); //arredonda a duas casas decimais
+  final double kcalArredondado = double.parse(kcal.toStringAsFixed(2));
   final Map<String, dynamic> alimentoMap = {
     'nomeAlimento': nomeAlimento,
     'qtdAlimento': qtdAlimento,
     'kcal': kcalArredondado,
   };
-
   return await db.update(
-    'refeicoes', // Nome da tabela
+    'refeicoes',
     alimentoMap,
     where: 'id = ?',
     whereArgs: [id],
   );
 }
 
-
-Future<List<Refeicao>> findAll() {
-  return createDatabase().then((db) {
-    return db.query('refeicoes').then((maps) {
-      final List<Refeicao> refeicoes = [];
-      for (Map<String, dynamic> map in maps) {
-        final Refeicao refeicao = Refeicao(
-          id: map['id'],
-          nomeRefeicao: map['nomeRefeicao'],
-          nomeAlimento: map['nomeAlimento'],
-          qtdAlimento: map['qtdAlimento'],
-          kcal: map['kcal'] ?? 0.0,
-        );
-        refeicoes.add(refeicao);
-      }
-      return refeicoes;
-    });
-  });
+Future<List<Refeicao>> findAll() async {
+  final db = await createDatabase();
+  final List<Map<String, dynamic>> maps = await db.query('refeicoes');
+  final List<Refeicao> refeicoes = [];
+  for (Map<String, dynamic> map in maps) {
+    final Refeicao refeicao = Refeicao(
+      id: map['id'],
+      nomeRefeicao: map['nomeRefeicao'],
+      nomeAlimento: map['nomeAlimento'],
+      qtdAlimento: map['qtdAlimento'],
+      kcal: map['kcal'] ?? 0.0,
+    );
+    refeicoes.add(refeicao);
+  }
+  return refeicoes;
 }
 
 Future<List<Refeicao>> findAllByRefeicaoNome(String nomeRefeicao) {

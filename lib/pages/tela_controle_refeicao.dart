@@ -131,6 +131,7 @@ class _NavigationExampleState extends State<NavigationExample> {
                   0.0,
                   (double sum, Refeicao refeicao) => sum + refeicao.kcal,
                 );
+                final double kcalArredondado = double.parse(totalCalorias.toStringAsFixed(2));
                 return Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
@@ -157,7 +158,7 @@ class _NavigationExampleState extends State<NavigationExample> {
                             ),
                           ),
                           Text(
-                            'Kcal: $totalCalorias',
+                            'Kcal: $kcalArredondado',
                             style: const TextStyle(
                               fontSize: 18.0,
                               fontWeight: FontWeight.bold,

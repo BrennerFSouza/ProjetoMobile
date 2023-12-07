@@ -1,4 +1,3 @@
-
 // ignore_for_file: unnecessary_null_comparison, file_names
 
 import 'package:tuple/tuple.dart';
@@ -6,25 +5,25 @@ import 'package:flutter/material.dart';
 import 'package:projetomobile/database/app_database.dart';
 
 final items = [
-    'Arroz',
-    'Feijão',
-    'Batata',
-    'Frango',
-    'Pão',
-    'Requeijão',
-    'Banana',
-    'Ovo'
-  ];
-  final arrayItems = [
-    const Tuple2('Arroz', 2.0),
-    const Tuple2('Feijão', 1.5),
-    const Tuple2('Batata', 1.0),
-    const Tuple2('Frango', 3.0),
-    const Tuple2('Pão', 2.5),
-    const Tuple2('Requeijão', 4.0),
-    const Tuple2('Banana', 1.2),
-    const Tuple2('Ovo', 2.8),
-  ];
+  'Arroz',
+  'Feijão',
+  'Batata',
+  'Frango',
+  'Pão',
+  'Requeijão',
+  'Banana',
+  'Ovo'
+];
+final arrayItems = [
+  const Tuple2('Arroz', 2.0),
+  const Tuple2('Feijão', 1.5),
+  const Tuple2('Batata', 1.0),
+  const Tuple2('Frango', 3.0),
+  const Tuple2('Pão', 2.5),
+  const Tuple2('Requeijão', 4.0),
+  const Tuple2('Banana', 1.2),
+  const Tuple2('Ovo', 2.8),
+];
 
 class EditAlimento extends StatefulWidget {
   final int id;
@@ -48,7 +47,6 @@ class _EditAlimentoState extends State<EditAlimento> {
     newnomeAlimento = widget.nomeAlimento;
   }
 
-  
   @override
   Widget build(BuildContext context) {
     final int id = widget.id;
@@ -127,26 +125,41 @@ class _EditAlimentoState extends State<EditAlimento> {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           ElevatedButton.icon(
-                            onPressed: () {
+                            onPressed: () async {
                               final String nomedoNovoAlimento =
                                   newnomeAlimento!;
                               final int? newqtd =
                                   int.tryParse(_qtdController.text);
                               if (nomedoNovoAlimento != null &&
                                   newqtd != null) {
-                                final double kcal = calcularKcal(nomedoNovoAlimento, newqtd);
-                                updateAlimento(id, nomedoNovoAlimento, newqtd,kcal);
+                                final double kcal =
+                                    calcularKcal(nomedoNovoAlimento, newqtd);
+                                await updateAlimento(
+                                    id, nomedoNovoAlimento, newqtd, kcal);
                               }
 
-                              Navigator.pop(context, true);
+                              // Aguardar 300 milissegundos
+                              await Future.delayed(
+                                  const Duration(milliseconds: 300));
+
+                              // Utilizar a função de contexto para obter o contexto local
+                              BuildContext currentContext = context;
+                              Navigator.pop(currentContext, true);
                             },
                             icon: const Icon(Icons.save),
                             label: const Text('Salvar'),
                           ),
                           ElevatedButton.icon(
-                            onPressed: () {
-                              deleteAlimento(id);
-                              Navigator.pop(context, true);
+                            onPressed: () async {
+                              await deleteAlimento(id);
+
+                              // Aguardar 300 milissegundos
+                              await Future.delayed(
+                                  const Duration(milliseconds: 300));
+
+                              // Utilizar a função de contexto para obter o contexto local
+                              BuildContext currentContext = context;
+                              Navigator.pop(currentContext, true);
                             },
                             icon: const Icon(Icons.delete),
                             label: const Text('Deletar'),

@@ -122,23 +122,35 @@ class _EditRefeicaoState extends State<EditRefeicao> {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           ElevatedButton.icon(
-                            onPressed: () {
+                            onPressed: () async {
                               final String newnomeRefeicao =
                                   _refeicaoController.text;
 
                               if (newnomeRefeicao != nomeRefeicao) {
-                                updateRefeicaoNome(
+                                await updateRefeicaoNome(
                                     nomeRefeicao, newnomeRefeicao);
+                                // Aguardar 300 milissegundos
+                                await Future.delayed(
+                                    const Duration(milliseconds: 300));
                               }
-                              Navigator.pop(context, true);
+
+                              // Utilizar a função de contexto para obter o contexto local
+                              BuildContext currentContext = context;
+                              Navigator.pop(currentContext, true);
                             },
                             icon: const Icon(Icons.save),
                             label: const Text('Salvar'),
                           ),
                           ElevatedButton.icon(
-                            onPressed: () {
-                              deleteRefeicao(nomeRefeicao);
-                              Navigator.pop(context, true);
+                            onPressed: () async {
+                              await deleteRefeicao(nomeRefeicao);
+                              // Aguardar 300 milissegundos
+                              await Future.delayed(
+                                  const Duration(milliseconds: 300));
+
+                              // Utilizar a função de contexto para obter o contexto local
+                              BuildContext currentContext = context;
+                              Navigator.pop(currentContext, true);
                             },
                             icon: const Icon(Icons.delete),
                             label: const Text('Deletar'),

@@ -28,28 +28,17 @@ class AutenticacaoServico {
   }
 
   Future<String?> logarUsuarios(
-      {required String email, required String senha}) async {
-    try {
-      await _firebaseAuth.signInWithEmailAndPassword(
-          email: email, password: senha);
-      print('Conta existe');
-      return null;
-    } on FirebaseAuthException catch (e) {
-      print('Erro de autenticação: ${e.code}, ${e.message}');
-      if (e.code == 'user-not-found' || e.code == 'wrong-password') {
-        // Trate os erros de usuário não encontrado ou senha incorreta
-        return 'Credenciais inválidas. Por favor, verifique seu email e senha.';
-      } else {
-        // Trate outros erros de autenticação de maneira geral
-        return 'Erro de autenticação: ${e.message}';
-      }
-    } catch (e) {
-      // Capturar outras exceções não relacionadas ao Firebase Authentication
-      print('Erro desconhecido: $e');
-      return 'Erro desconhecido: $e';
-    }
+    {required String email, required String senha}) async {
+  try {
+    await _firebaseAuth.signInWithEmailAndPassword(
+        email: email, password: senha);
+    print('Conta existe');
+    return null;
+  } catch (e) {
+    print('Erro ao tentar logar: $e');
+    return 'Login incorreto. Verifique seu email e senha.';
   }
-
+}
   Future<void> deslogar() async {
     return _firebaseAuth.signOut();
   }
